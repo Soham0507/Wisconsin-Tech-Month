@@ -14,6 +14,10 @@ export default defineConfig({
     server: { entry: "server" },
   },
   vite: {
+    // @lovable.dev/mcp-js dynamically imports "cloudflare:workers" (wrapped in a
+    // .catch that falls back to process.env). That specifier only exists on
+    // Cloudflare, so keep it external or non-Cloudflare builds (e.g. Vercel) fail.
+    build: { rollupOptions: { external: ["cloudflare:workers"] } },
     // mcpPlugin's path check compares Vite's forward-slash root against a
     // backslash path and always throws on Windows. It only regenerates the
     // already-committed /mcp route files, so skip it there.
