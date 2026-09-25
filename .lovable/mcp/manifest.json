@@ -1,0 +1,156 @@
+{
+  "version": 1,
+  "sdk_version": "2.2.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://juetrjbcwlhyvcgcbqpi.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "wisconsin-tech-month",
+      "version": "0.1.0",
+      "title": "Wisconsin Tech Month"
+    },
+    "tools": [
+      {
+        "name": "search_events",
+        "title": "Search Wisconsin Tech Month events",
+        "description": "Search published Wisconsin Tech Month events by keyword, city, programming week, or date range. Returns upcoming events first.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "query": {
+              "description": "Keyword matched against title, summary, and city.",
+              "type": "string",
+              "minLength": 1
+            },
+            "city": {
+              "description": "City name, e.g. Milwaukee or Madison.",
+              "type": "string",
+              "minLength": 1
+            },
+            "week": {
+              "description": "Programming week slug or name.",
+              "type": "string",
+              "minLength": 1
+            },
+            "from": {
+              "description": "Only events starting on or after this ISO date.",
+              "type": "string",
+              "minLength": 4
+            },
+            "to": {
+              "description": "Only events starting on or before this ISO date.",
+              "type": "string",
+              "minLength": 4
+            },
+            "limit": {
+              "description": "Maximum events to return.",
+              "default": 20,
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_event",
+        "title": "Get event details",
+        "description": "Get the full public details of one Wisconsin Tech Month event by its id.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "description": "Event id."
+            }
+          },
+          "required": [
+            "id"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_my_events",
+        "title": "List my hosted events",
+        "description": "List the events the signed-in host has submitted, including their review status (draft, pending, approved, denied).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "status": {
+              "description": "Optional status filter, e.g. approved or pending.",
+              "type": "string",
+              "minLength": 1
+            },
+            "limit": {
+              "default": 50,
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_event_registrations",
+        "title": "List registrations for my event",
+        "description": "List the people registered for one of the signed-in host's own events. Only the event's organizer (or an admin) can read these rows.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "event_id": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "description": "Event id owned by the signed-in host."
+            },
+            "limit": {
+              "default": 200,
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500
+            }
+          },
+          "required": [
+            "event_id"
+          ]
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}

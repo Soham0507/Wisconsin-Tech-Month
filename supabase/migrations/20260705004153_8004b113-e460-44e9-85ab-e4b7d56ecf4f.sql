@@ -1,0 +1,1 @@
+ALTER TABLE public.events ADD COLUMN host_org_type text NOT NULL DEFAULT 'Other';

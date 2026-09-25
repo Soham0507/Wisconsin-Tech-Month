@@ -1,0 +1,236 @@
+@import "@fontsource/space-mono";
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Connected Constellations — WTM 2026
+ * Night-sky navy, teal primary, purple secondary, per-week accents.
+ * Sora display, Inter body, IBM Plex Mono utility.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-subtext: "Space Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-stardust: var(--stardust);
+
+  --color-week-1: var(--week-1);
+  --color-week-2: var(--week-2);
+  --color-week-3: var(--week-3);
+  --color-week-4: var(--week-4);
+}
+
+:root {
+  --radius: 0.5rem;
+
+  /* Night sky */
+  --background: oklch(0.16 0.04 265);
+  --foreground: oklch(0.97 0.01 250);
+
+  --surface: oklch(0.20 0.045 265);
+  --surface-elevated: oklch(0.24 0.05 265);
+  --stardust: oklch(0.78 0.02 250 / 0.6);
+
+  --card: oklch(0.20 0.045 265);
+  --card-foreground: oklch(0.97 0.01 250);
+  --popover: oklch(0.22 0.05 265);
+  --popover-foreground: oklch(0.97 0.01 250);
+
+  /* Teal primary */
+  --primary: oklch(0.82 0.13 185);
+  --primary-foreground: oklch(0.16 0.04 265);
+
+  /* Purple secondary */
+  --secondary: oklch(0.62 0.22 295);
+  --secondary-foreground: oklch(0.98 0.01 250);
+
+  --muted: oklch(0.26 0.04 265);
+  --muted-foreground: oklch(0.72 0.025 255);
+
+  --accent: oklch(0.70 0.18 295);
+  --accent-foreground: oklch(0.16 0.04 265);
+
+  --destructive: oklch(0.65 0.22 25);
+  --destructive-foreground: oklch(0.98 0.01 250);
+
+  --border: oklch(1 0 0 / 0.10);
+  --input: oklch(1 0 0 / 0.14);
+  --ring: oklch(0.82 0.13 185 / 0.6);
+
+  /* Themed weeks */
+  --week-1: oklch(0.82 0.13 185);   /* teal — startups */
+  --week-2: oklch(0.70 0.18 295);   /* purple — industry */
+  --week-3: oklch(0.78 0.16 70);    /* amber — community */
+  --week-4: oklch(0.72 0.18 350);   /* magenta — talent */
+
+  /* Effects */
+  --glow-teal: 0 0 24px oklch(0.82 0.13 185 / 0.45);
+  --glow-purple: 0 0 24px oklch(0.70 0.18 295 / 0.45);
+  --gradient-sky: radial-gradient(ellipse at 50% -10%, oklch(0.28 0.08 270) 0%, oklch(0.16 0.04 265) 55%, oklch(0.12 0.04 265) 100%);
+  --gradient-aurora: linear-gradient(135deg, oklch(0.82 0.13 185) 0%, oklch(0.70 0.18 295) 100%);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html, body {
+    background: var(--gradient-sky);
+    background-attachment: fixed;
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    color-scheme: dark;
+  }
+
+  /* Ensure native form control icons (calendar/time pickers, select arrows)
+     render light on our dark UI across mobile and desktop */
+  input, select, textarea {
+    color-scheme: dark;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator,
+  input[type="time"]::-webkit-calendar-picker-indicator,
+  input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+  input[type="month"]::-webkit-calendar-picker-indicator,
+  input[type="week"]::-webkit-calendar-picker-indicator {
+    filter: invert(1) brightness(1.6);
+    opacity: 0.9;
+    cursor: pointer;
+  }
+
+
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  h1 { font-size: 2.5rem; line-height: 1; }
+  h2 { font-size: 2rem; line-height: 1.05; }
+  h3 { font-size: 1.5rem; line-height: 1.1; }
+  h4 { font-size: 1.25rem; line-height: 1.2; }
+  h5 { font-size: 1.125rem; line-height: 1.25; }
+
+  ::selection {
+    background: oklch(0.82 0.13 185 / 0.35);
+    color: var(--color-foreground);
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+@layer utilities {
+  .font-mono { font-family: var(--font-mono); }
+  .font-display { font-family: var(--font-display); }
+
+  .text-glow-teal { text-shadow: 0 0 18px oklch(0.82 0.13 185 / 0.55); }
+  .shadow-glow-teal { box-shadow: var(--glow-teal); }
+  .shadow-glow-purple { box-shadow: var(--glow-purple); }
+
+  /* Soft shadow + faint glow so partner logos read on the night-sky background */
+  .logo-shadow {
+    filter: drop-shadow(0 4px 12px oklch(0 0 0 / 0.55)) drop-shadow(0 0 14px oklch(0.97 0.01 250 / 0.28));
+  }
+  .logo-shadow-invert {
+    filter: brightness(0) invert(1) drop-shadow(0 4px 12px oklch(0 0 0 / 0.55)) drop-shadow(0 0 14px oklch(0.97 0.01 250 / 0.28));
+  }
+
+  .bg-aurora { background: var(--gradient-aurora); }
+
+  .card-constellation {
+    background: linear-gradient(180deg, oklch(0.22 0.05 265 / 0.7), oklch(0.18 0.045 265 / 0.7));
+    border: 1px solid oklch(1 0 0 / 0.08);
+    backdrop-filter: blur(8px);
+  }
+
+  .glass-tile {
+    background: linear-gradient(145deg, oklch(1 0 0 / 0.08) 0%, oklch(1 0 0 / 0.02) 100%);
+    border: 1px solid oklch(1 0 0 / 0.18);
+    box-shadow:
+      inset 0 1px 0 0 oklch(1 0 0 / 0.12),
+      0 8px 32px oklch(0 0 0 / 0.25);
+    backdrop-filter: blur(20px) saturate(140%);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .glass-tile:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      inset 0 1px 0 0 oklch(1 0 0 / 0.18),
+      0 12px 40px oklch(0 0 0 / 0.35);
+  }
+
+  /* Twinkling star */
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+  .twinkle { animation: twinkle 3s ease-in-out infinite; }
+
+  @keyframes glow-star {
+    0%, 100% { filter: drop-shadow(0 0 2px oklch(0.82 0.13 185 / 0.4)); opacity: 0.7; }
+    50% { filter: drop-shadow(0 0 16px oklch(0.82 0.13 185 / 1)) drop-shadow(0 0 28px oklch(0.82 0.13 185 / 0.6)); opacity: 1; }
+  }
+  .pulse-star { animation: glow-star 2s ease-in-out infinite; }
+
+  @keyframes float-slow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  .float-slow { animation: float-slow 6s ease-in-out infinite; }
+
+  @keyframes partner-scroll-left {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @keyframes partner-scroll-right {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+  }
+
+  .partner-scroll-left { animation: partner-scroll-left 44s linear infinite; }
+  .partner-scroll-right { animation: partner-scroll-right 44s linear infinite; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .partner-scroll-left,
+    .partner-scroll-right { animation-play-state: paused; }
+  }
+}

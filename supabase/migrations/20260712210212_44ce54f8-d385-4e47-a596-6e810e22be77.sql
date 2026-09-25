@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "Public read approved events" ON public.events;

@@ -1,0 +1,1 @@
+UPDATE public.events SET city = btrim(regexp_replace(city, ',\s*[A-Za-z]{2}\.?$', '')) WHERE city ~ ',\s*[A-Za-z]{2}\.?$';

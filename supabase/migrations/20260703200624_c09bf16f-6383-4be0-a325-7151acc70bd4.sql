@@ -1,0 +1,1 @@
+ALTER TABLE public.events ALTER COLUMN region DROP NOT NULL; ALTER TABLE public.events ALTER COLUMN region SET DEFAULT '';

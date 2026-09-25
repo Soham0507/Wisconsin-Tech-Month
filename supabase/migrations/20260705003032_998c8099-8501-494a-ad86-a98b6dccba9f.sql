@@ -1,0 +1,1 @@
+ALTER TABLE public.events ADD COLUMN host_url text NOT NULL DEFAULT '';
